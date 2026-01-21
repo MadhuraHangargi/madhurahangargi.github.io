@@ -52,4 +52,5 @@
 ![image Alt](https://github.com/MadhuraHangargi/madhurahangargi.github.io/blob/9e11fb997786c8a5a181c461e5890006a29207ef/Screenshot%202026-01-22%20004718.png)
 ![image Alt](https://github.com/MadhuraHangargi/madhurahangargi.github.io/blob/3dc50ff6fea247b6a49fa614c7f6a94b530c898c/Screenshot%202026-01-22%20004646.png)
 ![image Alt](https://github.com/MadhuraHangargi/madhurahangargi.github.io/blob/750fdb0ebe60edfdb347bd9743b39056e6e86a1c/Screenshot%202026-01-22%20005117.png)
+-The above MySQL Workbench screenshot demonstrates successful backend persistence of contract data. Signature images are intentionally not stored in the database to avoid long-term retention of sensitive personal identifiers. In accordance with data privacy and ethical handling practices, signatures are used only for runtime rendering and PDF generation, allowing users to download complete signed contracts without compromising personal data security.
 #Author: Madhura Hangargi
