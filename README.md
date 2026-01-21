@@ -1,5 +1,5 @@
 # ContractManagement
-- A simple frontend-based contract management system built using HTML, CSS, and JavaScript. It allows users to create contracts, track their status, and manage the full contract lifecycle from a dashboard.
+- A simple frontend-based contract management system built using HTML, CSS, and JavaScript. It allows users to create contracts, track their status, and manage the full contract lifecycle from a dashboard with a backend.
 
 #FEATURES:
 -Creates contracts using predefined templates
@@ -47,6 +47,7 @@
 
 10.readme.md
 -This file explains the project, its flow, and how different files work together.
+
 
 
 
