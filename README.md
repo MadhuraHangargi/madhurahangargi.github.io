@@ -19,6 +19,12 @@
 5.jsPDF & html2canvas
 6.SQL
 
+IDEAS:
+-This system can be easily extended to AWS-based infrastructure. The frontend can be hosted on Amazon S3 with CloudFront for scalable static delivery. The backend API can be containerized and deployed using Amazon ECS (Fargate) or EC2, while Amazon RDS (MySQL) can replace the local database for managed storage, backups, and high availability.
+
+-Sensitive configurations can be handled using AWS Secrets Manager, and contract PDFs can be stored securely in Amazon S3. CI/CD pipelines can be implemented using GitHub Actions or AWS CodePipeline to automate deployments and updates. This design keeps the application cloud-ready while following DevOps best practices aswell.
+
+
 #contract-management-app/
 │
 ├── assets/
