@@ -12,6 +12,7 @@ My site is live at https://madhurahangargi.github.io/
 -Floating AI Assistant available on all pages
 -We can Download signed contracts as PDF
 -Data stored using LocalStorage (no backend)
+-REST API–based backend with database storage
 
 #Tech Stack:
 1.HTML5
