@@ -48,7 +48,7 @@
 10.readme.md
 -This file explains the project, its flow, and how different files work together.
 
-
+![image Alt](https://github.com/MadhuraHangargi/madhurahangargi.github.io/blob/6418c3ca2b306672d4eeaf342c778fd55365049c/Screenshot%202026-01-22%20004701.png)
 
 
 
