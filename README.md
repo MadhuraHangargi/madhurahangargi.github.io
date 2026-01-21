@@ -1,7 +1,7 @@
 My site is live at https://madhurahangargi.github.io/
 - FOR LOGIN : USE ANY EMAIL-ID ND PASSWORD: m
 # ContractManagement
-- A simple frontend-based contract management system built using HTML, CSS, and JavaScript. It allows users to create contracts, track their status, and manage the full contract lifecycle from a dashboard with a backend.
+- A simple contract management web application that allows users to create, view, and manage contracts using predefined templates. The project includes a frontend built with HTML, CSS, and JavaScript, and a backend built using Flask with a MySQL database.
 - FOR LOGIN : USE ANY EMAIL-ID ND PASSWORD: m.
   
 #FEATURES:
