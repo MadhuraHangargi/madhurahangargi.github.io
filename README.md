@@ -1,6 +1,6 @@
 # ContractManagement
 - A simple frontend-based contract management system built using HTML, CSS, and JavaScript. It allows users to create contracts, track their status, and manage the full contract lifecycle from a dashboard with a backend.
-- FOR LOGIN IN LIVE SEVER: USE ANY EMAIL-ID ND PASSWORD AS m.
+- FOR LOGIN : USE ANY EMAIL-ID ND PASSWORD AS m.
   
 #FEATURES:
 -Creates contracts using predefined templates
