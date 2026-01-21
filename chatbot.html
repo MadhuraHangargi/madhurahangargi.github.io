@@ -1,0 +1,53 @@
+<!-- ===== FLOATING CHATBOT ===== -->
+
+<!-- FLOATING BUBBLE -->
+<div id="chatbot-bubble"
+     onclick="
+       document.getElementById('chatbot-panel').style.display='flex';
+       this.style.display='none';
+     ">
+  🤖
+</div>
+
+<!-- CHAT PANEL -->
+<div id="chatbot-panel" style="display:none;">
+
+  <!-- HEADER -->
+  <div class="chat-header">
+    <span>
+      AI Assistant <small style="color:#22c55e;">● Online</small>
+    </span>
+
+    <!-- ❌ CLOSE (GUARANTEED) -->
+    <button
+      id="chat-close"
+      onclick="
+        document.getElementById('chatbot-panel').style.display='none';
+        document.getElementById('chatbot-bubble').style.display='flex';
+      ">
+      ✕
+    </button>
+  </div>
+
+  <!-- BODY -->
+  <div class="chat-body" id="chatBody">
+    <div class="bot-msg">
+      Hello! I’m your Contract Assistant.<br>
+      I can help you track contract status.
+    </div>
+  </div>
+
+  <!-- QUICK ACTIONS -->
+  <div class="chat-quick">
+    <button class="quick-btn" data-type="help">Help</button>
+    <button class="quick-btn" data-type="summary">Contract Summary</button>
+    <button class="quick-btn" data-type="status">System Status</button>
+  </div>
+
+  <!-- INPUT -->
+  <div class="chat-input">
+    <input id="chatInput" placeholder="Ask me anything…" />
+    <button id="chat-send">➤</button>
+  </div>
+
+</div>

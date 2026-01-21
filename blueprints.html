@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Templates | Contracts</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div class="dashboard-container">
+
+    <!-- SIDEBAR (EXACT SAME AS DASHBOARD) -->
+    <aside class="sidebar">
+        <h2 class="sidebar-logo">Contracts</h2>
+        <ul class="sidebar-menu">
+            <li><a href="dashboard.html">Dashboard</a></li>
+            <li><a href="create-contract.html">Contracts</a></li>
+            <li><a href="blueprints.html">Templates</a></li>
+            <li><a href="index.html">Logout</a></li>
+        </ul>
+    </aside>
+
+    <!-- MAIN CONTENT (ONLY THIS CHANGES) -->
+    <div class="main-area">
+
+        <h1 class="page-title">Contract Templates</h1>
+
+        <div class="blueprint-card">
+            <h2>Employment Agreement</h2>
+            <p>
+                Defines employment terms including duties, compensation,
+                confidentiality, and termination clauses.
+            </p>
+            <button class="btn-view" onclick="useTemplate('employment')">
+                Use Template
+            </button>
+        </div>
+
+        <div class="blueprint-card">
+            <h2>Non-Disclosure Agreement (NDA)</h2>
+            <p>
+                Protects confidential information shared between parties.
+            </p>
+            <button class="btn-view" onclick="useTemplate('nda')">
+                Use Template
+            </button>
+        </div>
+
+        <div class="blueprint-card">
+            <h2>Lease Agreement</h2>
+            <p>
+                Outlines rental terms between landlord and tenant.
+            </p>
+            <button class="btn-view" onclick="useTemplate('lease')">
+                Use Template
+            </button>
+        </div>
+
+        <div class="blueprint-card">
+            <h2>Service Agreement</h2>
+            <p>
+                Defines scope of services, timelines, and payment terms.
+            </p>
+            <button class="btn-view" onclick="useTemplate('service')">
+                Use Template
+            </button>
+        </div>
+
+        <div class="blueprint-card">
+            <h2>Vendor Agreement</h2>
+            <p>
+                Governs relationship between company and vendor.
+            </p>
+            <button class="btn-view" onclick="useTemplate('vendor')">
+                Use Template
+            </button>
+        </div>
+
+    </div>
+</div>
+<div id="chatbot-container"></div>
+
+<link rel="stylesheet" href="assets/chatbot/chatbot.css">
+<script src="assets/chatbot/chatbot.js"></script>
+
+<script>
+fetch('assets/chatbot/chatbot.html')
+  .then(res => res.text())
+  .then(html => {
+    document.getElementById('chatbot-container').innerHTML = html;
+  });
+</script>
+<script>
+
+
+function useTemplate(template) {
+    window.location.href = `create-contract.html?template=${template}`;
+}
+
+
+</script>
+
+</body>
+</html>

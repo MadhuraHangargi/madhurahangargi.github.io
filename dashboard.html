@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard | Contracts</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div class="dashboard-container">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+        <h2 class="sidebar-logo">Contracts</h2>
+        <ul class="sidebar-menu">
+            <li><a href="dashboard.html">Dashboard</a></li>
+            <li><a href="create-contract.html">Contracts</a></li>
+            <li><a href="blueprints.html">Templates</a></li>
+            <li><a href="index.html">Logout</a></li>
+        </ul>
+    </aside>
+
+    <!-- MAIN AREA -->
+    <div class="main-area">
+
+        <h1 class="page-title">Contract List</h1>
+
+        <a href="create-contract.html" class="btn-add">Add Contract</a>
+        <!-- ===== USER INFO (TOP RIGHT) ===== -->
+        <div class="user-info-card">
+            <span>Logged in as</span>
+            <strong id="loggedUser">User</strong>
+        </div>
+
+        <div class="table-card">
+            <table class="contract-table">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Client</th>
+                        <th>Contract Date</th>
+                        <th>Template</th>
+                        <th>Is Signed</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody id="contractTableBody"></tbody>
+            </table>
+        </div>
+        <!-- ===== CONTRACT PHASE OVERVIEW ===== -->
+        <div class="phase-overview">
+
+            <div class="phase-card created">
+                <span>Created</span>
+                <h2 id="countCreated">0</h2>
+            </div>
+
+        <div class="phase-card approved">
+            <span>Approved</span>
+            <h2 id="countApproved">0</h2>
+        </div>
+
+        <div class="phase-card sent">
+            <span>Sent</span>
+            <h2 id="countSent">0</h2>
+        </div>
+
+        <div class="phase-card signed">
+            <span>Signed</span>
+            <h2 id="countSigned">0</h2>
+        </div>
+
+        <div class="phase-card locked">
+            <span>Locked</span>
+            <h2 id="countLocked">0</h2>
+        </div>
+
+    </div>
+
+    </div>
+</div>
+<!-- ===== CHATBOT (GLOBAL) ===== -->
+<div id="chatbot-container"></div>
+
+<link rel="stylesheet" href="assets/chatbot/chatbot.css">
+
+<script>
+fetch('assets/chatbot/chatbot.html')
+  .then(res => res.text())
+  .then(html => {
+    document.getElementById('chatbot-container').innerHTML = html;
+
+    // 🔥 LOAD JS ONLY AFTER HTML EXISTS
+    const script = document.createElement("script");
+    script.src = "assets/chatbot/chatbot.js";
+    document.body.appendChild(script);
+  });
+</script>
+<script>
+function updatePhaseStats(contracts) {
+    const counts = {
+        Draft: 0,
+        Approved: 0,
+        Sent: 0,
+        Signed: 0,
+        Locked: 0
+    };
+
+    contracts.forEach(c => {
+        if (counts[c.status] !== undefined) {
+            counts[c.status]++;
+        }
+    });
+
+    // SAFE DOM updates (only if elements exist)
+    if (document.getElementById("countDraft"))
+        document.getElementById("countDraft").innerText = counts.Draft;
+
+    if (document.getElementById("countApproved"))
+        document.getElementById("countApproved").innerText = counts.Approved;
+
+    if (document.getElementById("countSent"))
+        document.getElementById("countSent").innerText = counts.Sent;
+
+    if (document.getElementById("countSigned"))
+        document.getElementById("countSigned").innerText = counts.Signed;
+
+    if (document.getElementById("countLocked"))
+        document.getElementById("countLocked").innerText = counts.Locked;
+}
+
+function loadContracts() {
+    const contracts = JSON.parse(localStorage.getItem("contracts")) || [];
+    const tbody = document.getElementById("contractTableBody");
+    tbody.innerHTML = "";
+
+    if (contracts.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="6">No contracts found</td></tr>`;
+        return;
+    }
+
+    contracts.forEach((contract, index) => {
+        const row = document.createElement("tr");
+
+        row.innerHTML = `
+            <td>${index + 1}</td>
+            <td>${contract.clientName}</td>
+            <td>${contract.startDate || "-"}</td>
+            <td>${contract.template}</td>
+            <td>${contract.status === "Signed" ? "✔" : "-"}</td>
+            <td>
+                <button class="btn-view" onclick="viewContract(${contract.id})">View</button>
+                <button class="btn-delete" onclick="deleteContract(${contract.id})">Delete</button>
+            </td>
+        `;
+
+        tbody.appendChild(row);
+    });
+    updatePhaseStats(contracts);
+}
+
+function viewContract(id) {
+    window.location.href = `view-contract.html?id=${id}`;
+}
+
+function deleteContract(id) {
+    if (!confirm("Delete this contract?")) return;
+    let contracts = JSON.parse(localStorage.getItem("contracts")) || [];
+    contracts = contracts.filter(c => c.id !== id);
+    localStorage.setItem("contracts", JSON.stringify(contracts));
+    loadContracts();
+}
+
+function goToCreate() {
+    window.location.href = "create-contract.html";
+}
+
+
+
+loadContracts();
+
+
+/* ===== USER INFO ===== */
+document.getElementById("loggedUser").innerText =
+    localStorage.getItem("loggedInUser") || "Guest";
+
+/* ===== PHASE COUNT LOGIC ===== */
+function updatePhaseCounts() {
+    const contracts = JSON.parse(localStorage.getItem("contracts")) || [];
+
+    const counts = {
+        Created: 0,
+        Approved: 0,
+        Sent: 0,
+        Signed: 0,
+        Locked: 0
+    };
+
+    contracts.forEach(c => {
+        if (counts[c.status] !== undefined) {
+            counts[c.status]++;
+        }
+    });
+
+    document.getElementById("countCreated").innerText = counts.Created;
+    document.getElementById("countApproved").innerText = counts.Approved;
+    document.getElementById("countSent").innerText = counts.Sent;
+    document.getElementById("countSigned").innerText = counts.Signed;
+    document.getElementById("countLocked").innerText = counts.Locked;
+}
+
+/* ===== AUTO REFRESH ===== */
+updatePhaseCounts();
+
+window.addEventListener("storage", () => {
+    updatePhaseCounts();
+});
+
+</script>
+</body>
+</html>

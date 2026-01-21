@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Create Contract</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div class="dashboard-container">
+
+    <!-- SIDEBAR (UNCHANGED) -->
+    <aside class="sidebar">
+      <h2 class="sidebar-logo">Contracts</h2>
+      <ul class="sidebar-menu">
+        <li><a href="dashboard.html">Dashboard</a></li>
+        <li><a href="create-contract.html">Contracts</a></li>
+        <li><a href="blueprints.html">Templates</a></li>
+        <li><a href="index.html">Logout</a></li>
+      </ul>
+    </aside>
+
+    <div class="main-area">
+        <div class="cc-layout">
+
+            <!-- ================= PREVIEW ================= -->
+            <div class="cc-preview" id="preview">
+                <h2>Select a template to preview the agreement</h2>
+            </div>
+
+            <!-- ================= FORM ================= -->
+            <div class="cc-form">
+
+                <h2>Create Contract</h2>
+
+                <!-- COMMON FIELDS -->
+                <label>Contract Name</label>
+                <input type="text" oninput="updateField('contractName', this.value)">
+
+                <label>Client Name</label>
+                <input type="text" oninput="updateField('clientName', this.value)">
+
+                <label>Client Address</label>
+                <input type="text" oninput="updateField('clientAddress', this.value)">
+
+                <label>Start Date</label>
+                <input type="date" oninput="updateField('startDate', this.value)">
+
+                <label>Template</label>
+                <select id="templateSelect" onchange="loadTemplate(this.value)">
+                    <option value="">Select Template</option>
+                    <option value="employment">Employment Agreement</option>
+                    <option value="nda">Non-Disclosure Agreement</option>
+                    <option value="lease">Lease Agreement</option>
+                    <option value="service">Service Agreement</option>
+                    <option value="vendor">Vendor Agreement</option>
+                </select>
+
+                <!-- DYNAMIC FIELDS -->
+                <div id="dynamicFields"></div>
+
+                <label>Upload Signature</label>
+                <input type="file" accept="image/*" onchange="loadSignature(event)">
+
+                <button onclick="saveContract()">Save Contract</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+<div id="chatbot-container"></div>
+
+<link rel="stylesheet" href="assets/chatbot/chatbot.css">
+<script src="assets/chatbot/chatbot.js"></script>
+
+<script>
+fetch('assets/chatbot/chatbot.html')
+  .then(res => res.text())
+  .then(html => {
+    document.getElementById('chatbot-container').innerHTML = html;
+  });
+</script>
+<script>
+
+
+/* ===== LIVE UPDATE ===== */
+function updateField(field, value){
+    document.querySelectorAll(`[data-field="${field}"]`)
+        .forEach(el => el.textContent = value || `[${field}]`);
+}
+
+/* ===== SIGNATURE ===== */
+function loadSignature(e){
+    const reader = new FileReader();
+    reader.onload = () => {
+        document.getElementById("signatureBox").innerHTML =
+            `<img src="${reader.result}" style="max-width:200px">`;
+    };
+    reader.readAsDataURL(e.target.files[0]);
+}
+
+/* ===== TEMPLATES (MUST COME FIRST) ===== */
+const templates = {
+
+  employment: {
+    html: `
+      <h1>EMPLOYMENT AGREEMENT</h1>
+      <p>
+        This Employment Agreement is entered into on
+        <span data-field="startDate">[Date]</span>,
+        between <span data-field="companyName">[Company Name]</span>,
+        having its principal place of business at
+        <span data-field="clientAddress">[Company Address]</span>,
+        and <span data-field="clientName">[Employee Name]</span>.
+      </p>
+
+      <h3>Compensation</h3>
+      <p><span data-field="salary">[Salary]</span></p>
+
+      <div class="signature-wrapper">
+        <div class="signature-label">Signature</div>
+        <div id="signatureBox"></div>
+      </div>
+
+    `,
+    fields: `
+      <label>Company Name</label>
+      <input oninput="updateField('companyName', this.value)">
+
+      <label>Salary</label>
+      <input oninput="updateField('salary', this.value)">
+    `
+  },
+
+  nda: {
+    html: `
+      <h1>NON-DISCLOSURE AGREEMENT</h1>
+      <p>
+        This NDA is made on <span data-field="startDate">[Date]</span>
+        between <span data-field="clientName">[Disclosing Party]</span>
+        and <span data-field="receivingParty">[Receiving Party]</span>.
+      </p>
+
+      <div class="signature-wrapper">
+        <div class="signature-label">Signature</div>
+        <div id="signatureBox"></div>
+      </div>
+
+    `,
+    fields: `
+      <label>Receiving Party</label>
+      <input oninput="updateField('receivingParty', this.value)">
+    `
+  },
+
+  lease: {
+    html: `
+      <h1>LEASE AGREEMENT</h1>
+      <p>
+        Landlord: <span data-field="landlord">[Landlord]</span><br>
+        Tenant: <span data-field="clientName">[Tenant]</span>
+      </p>
+
+      <div class="signature-wrapper">
+        <div class="signature-label">Signature</div>
+        <div id="signatureBox"></div>
+      </div>
+
+    `,
+    fields: `
+      <label>Landlord Name</label>
+      <input oninput="updateField('landlord', this.value)">
+    `
+  },
+
+  service: {
+    html: `
+      <h1>SERVICE AGREEMENT</h1>
+      <p>
+        Client: <span data-field="clientName">[Client]</span><br>
+        Provider: <span data-field="provider">[Provider]</span>
+      </p>
+
+      <div class="signature-wrapper">
+        <div class="signature-label">Signature</div>
+        <div id="signatureBox"></div>
+      </div>
+
+    `,
+    fields: `
+      <label>Service Provider</label>
+      <input oninput="updateField('provider', this.value)">
+    `
+  },
+
+  vendor: {
+    html: `
+      <h1>VENDOR AGREEMENT</h1>
+      <p>
+        Company: <span data-field="companyName">[Company]</span><br>
+        Vendor: <span data-field="clientName">[Vendor]</span>
+      </p>
+
+      <div class="signature-wrapper">
+        <div class="signature-label">Signature</div>
+        <div id="signatureBox"></div>
+      </div>
+
+    `,
+    fields: `
+      <label>Company Name</label>
+      <input oninput="updateField('companyName', this.value)">
+    `
+  }
+};
+
+
+
+
+
+/* ===== TEMPLATE LOADER ===== */
+function loadTemplate(type) {
+    console.log('Template selected:', type);
+
+    const preview = document.getElementById('preview');
+    const fields = document.getElementById('dynamicFields');
+
+    if (!type || !templates[type]) {
+        preview.innerHTML = '<h2>Select a template to preview the agreement</h2>';
+        fields.innerHTML = '';
+        return;
+    }
+
+    preview.innerHTML = templates[type].html;
+    fields.innerHTML = templates[type].fields;
+}
+function updateField(field, value) {
+    document
+        .querySelectorAll(`[data-field="${field}"]`)
+        .forEach(el => el.textContent = value || `[${field}]`);
+}
+
+
+/* ===== SAVE ===== */
+
+function saveContract() {
+  const previewBox = document.getElementById('preview');
+
+    if (previewBox.innerText.includes('Select a template')) {
+        alert('Please select a template before saving');
+        return;
+    }
+    const contract = {
+        id: Date.now(),
+        name: document.querySelector('[oninput*="contractName"]')?.value || '',
+        clientName: document.querySelector('[oninput*="clientName"]')?.value || '',
+        clientAddress: document.querySelector('[oninput*="clientAddress"]')?.value || '',
+        startDate: document.querySelector('[type="date"]')?.value || '',
+        template: document.querySelector('select')?.value || '',
+        previewHTML: document.getElementById('preview').innerHTML,
+        status: 'Draft'
+    };
+
+    if (!contract.name || !contract.clientName || !contract.template) {
+        alert('Please fill Contract Name, Client Name and Template');
+        return;
+    }
+
+    const contracts = JSON.parse(localStorage.getItem('contracts')) || [];
+    contracts.push(contract);
+    localStorage.setItem('contracts', JSON.stringify(contracts));
+
+    alert('Contract saved successfully');
+    window.location.href = 'dashboard.html';
+}
+</script>
+
+
+
+
+</body>
+</html>

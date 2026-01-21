@@ -1,0 +1,458 @@
+/* =========================================================
+   RESET
+   ========================================================= */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+/* =========================================================
+   COLOR VARIABLES
+   ========================================================= */
+:root {
+    --login-blue: #1f3a5f;     /* Approved login box */
+    --sidebar-blue: #2f4050;   /* Approved sidebar */
+    --light-bg: #f3f3f4;
+    --white: #ffffff;
+    --green: #1ab394;
+    --blue-btn: #337ab7;
+    --orange-btn: #f0ad4e;
+    --red-btn: #ed5565;
+}
+
+/* =========================================================
+   LOGIN PAGE (APPROVED – DO NOT TOUCH)
+   ========================================================= */
+.login-body {
+    background: var(--light-bg);
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.login-box {
+    background: var(--login-blue);
+    width: 360px;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 12px 25px rgba(0,0,0,0.25);
+}
+
+.login-box h2 {
+    color: var(--white);
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+.login-box label {
+    color: var(--white);
+    font-size: 14px;
+}
+
+.login-box input {
+    width: 100%;
+    padding: 10px;
+    margin: 8px 0 15px;
+    border-radius: 4px;
+    border: none;
+}
+
+.login-box button {
+    width: 100%;
+    padding: 10px;
+    background: var(--white);
+    color: var(--login-blue);
+    border: none;
+    border-radius: 4px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.note {
+    text-align: center;
+    font-size: 12px;
+    color: #ddd;
+    margin-top: 15px;
+}
+
+/* =========================================================
+   DASHBOARD LAYOUT (APPROVED – DO NOT TOUCH)
+   ========================================================= */
+.dashboard-container {
+    display: flex;
+    height: 100vh;
+    background: var(--light-bg);
+}
+
+/* SIDEBAR */
+.sidebar {
+    width: 230px;
+    background: var(--sidebar-blue);
+    color: var(--white);
+    padding: 20px;
+}
+
+.sidebar-logo {
+    font-size: 22px;
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.sidebar-menu {
+    list-style: none;
+}
+
+.sidebar-menu li {
+    padding: 12px;
+    cursor: pointer;
+    border-radius: 4px;
+    margin-bottom: 5px;
+}
+
+.sidebar-menu li:hover,
+.sidebar-menu .active {
+    background: rgba(255,255,255,0.15);
+}
+
+/* MAIN AREA */
+.main-area {
+    flex: 1;
+    padding: 20px;
+}
+
+/* PAGE TITLE */
+.page-title {
+    font-size: 26px;
+    margin-bottom: 10px;
+}
+
+/* ADD CONTRACT BUTTON */
+.btn-add {
+    background: var(--green);
+    color: var(--white);
+    border: none;
+    padding: 8px 14px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+/* TABLE CARD */
+.table-card {
+    background: var(--white);
+    padding: 20px;
+    margin-top: 15px;
+    border-radius: 6px;
+}
+
+/* TABLE */
+.contract-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.contract-table th,
+.contract-table td {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+    text-align: left;
+}
+
+.contract-table th {
+    font-weight: bold;
+}
+
+/* ACTION BUTTONS */
+.btn-view {
+    background: var(--blue-btn);
+    color: var(--white);
+    border: none;
+    padding: 6px 10px;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.btn-edit {
+    background: var(--orange-btn);
+    color: var(--white);
+    border: none;
+    padding: 6px 10px;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.btn-delete {
+    background: var(--red-btn);
+    color: var(--white);
+    border: none;
+    padding: 6px 10px;
+    border-radius: 3px;
+    cursor: pointer;
+}
+/* =========================================================
+   CREATE CONTRACT PAGE – APPEND ONLY (SAFE)
+   ========================================================= */
+
+/* Layout wrapper */
+.cc-layout {
+    display: grid;
+    grid-template-columns: 1fr 360px;
+    gap: 25px;
+    align-items: start;
+}
+
+/* CENTER PREVIEW CARD */
+.cc-preview {
+    background: #ffffff;
+    padding: 30px;
+    border-radius: 6px;
+    min-height: 520px;
+    box-shadow: 0 0 12px rgba(0,0,0,0.08);
+}
+
+/* Placeholder text */
+.cc-placeholder {
+    color: #666;
+    font-size: 14px;
+}
+
+/* RIGHT FORM PANEL */
+.cc-form {
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 6px;
+    box-shadow: 0 0 12px rgba(0,0,0,0.08);
+}
+
+.cc-form h3 {
+    margin-bottom: 15px;
+    font-size: 18px;
+}
+
+/* Form labels */
+.cc-form label {
+    display: block;
+    margin-top: 12px;
+    font-size: 13px;
+    color: #333;
+}
+
+/* Inputs & select */
+.cc-form input,
+.cc-form select {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+}
+
+/* Buttons container */
+.cc-buttons {
+    display: flex;
+    gap: 10px;
+    margin-top: 18px;
+}
+/* =========================================================
+   VIEW CONTRACT PAGE – APPEND ONLY (SAFE)
+   ========================================================= */
+
+.vc-layout {
+    display: grid;
+    grid-template-columns: 1fr 340px;
+    gap: 25px;
+}
+
+/* AGREEMENT PREVIEW */
+.vc-preview {
+    background: #ffffff;
+    padding: 30px;
+    border-radius: 6px;
+    min-height: 520px;
+    overflow-y: auto;
+    box-shadow: 0 0 12px rgba(0,0,0,0.08);
+}
+
+.vc-preview h2 {
+    margin-bottom: 10px;
+}
+
+.vc-preview h3 {
+    margin-top: 20px;
+}
+
+/* TIMELINE PANEL */
+.vc-timeline {
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 6px;
+    box-shadow: 0 0 12px rgba(0,0,0,0.08);
+}
+
+.timeline-list {
+    list-style: none;
+    margin: 15px 0;
+}
+
+.timeline-list li {
+    padding: 10px;
+    border-left: 4px solid #ccc;
+    margin-bottom: 10px;
+    padding-left: 12px;
+    font-size: 14px;
+}
+
+.timeline-list li.done {
+    border-color: #1ab394;
+    color: #1ab394;
+}
+
+.timeline-list li.active {
+    border-color: #337ab7;
+    color: #337ab7;
+    font-weight: bold;
+}
+
+.timeline-actions button {
+    width: 100%;
+    margin-bottom: 8px;
+}
+/* =========================================================
+   VIEW CONTRACT – PREVIEW + TIMELINE (APPEND ONLY)
+   ========================================================= */
+
+.vc-layout {
+    display: grid;
+    grid-template-columns: 1fr 340px;
+    gap: 25px;
+}
+
+/* AGREEMENT PREVIEW */
+.vc-preview {
+    background: #ffffff;
+    padding: 30px;
+    border-radius: 6px;
+    min-height: 550px;
+    overflow-y: auto;
+    box-shadow: 0 0 12px rgba(0,0,0,0.08);
+}
+
+/* TIMELINE PANEL */
+.vc-timeline {
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 6px;
+    box-shadow: 0 0 12px rgba(0,0,0,0.08);
+}
+
+.timeline-list {
+    list-style: none;
+    margin: 15px 0;
+}
+
+.timeline-list li {
+    padding: 10px;
+    border-left: 4px solid #ccc;
+    margin-bottom: 10px;
+    padding-left: 12px;
+    font-size: 14px;
+}
+
+.timeline-list li.done {
+    border-color: #1ab394;
+    color: #1ab394;
+}
+
+.timeline-list li.active {
+    border-color: #337ab7;
+    color: #337ab7;
+    font-weight: bold;
+}
+
+.timeline-actions button {
+    width: 100%;
+    margin-bottom: 8px;
+}
+/* =========================================================
+   SIDEBAR LINK FIX (APPEND ONLY – SAFE)
+   ========================================================= */
+
+/* Remove default link styling */
+.sidebar-menu li a {
+    color: #ffffff;              /* white text like before */
+    text-decoration: none;       /* remove underline */
+    display: block;
+    width: 100%;
+}
+
+/* Hover effect */
+.sidebar-menu li a:hover {
+    color: #ffffff;
+}
+
+/* Active item */
+.sidebar-menu .active a {
+    color: #ffffff;
+}
+/* ================= USER INFO ================= */
+.user-info-card {
+    position: absolute;
+    top: 20px;
+    right: 25px;
+    background: #ffffff;
+    padding: 10px 16px;
+    border-radius: 6px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.08);
+    font-size: 13px;
+}
+
+/* ================= PHASE OVERVIEW ================= */
+.phase-overview {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 15px;
+    margin-top: 30px;
+}
+
+.phase-card {
+    background: #ffffff;
+    padding: 15px;
+    border-radius: 6px;
+    text-align: center;
+    box-shadow: 0 0 10px rgba(0,0,0,0.08);
+}
+
+.phase-card span {
+    font-size: 13px;
+    color: #666;
+}
+
+.phase-card h2 {
+    margin-top: 8px;
+    font-size: 24px;
+}
+
+/* COLORS – SAME THEME YOU APPROVED */
+.phase-card.created { border-left: 5px solid #999; }
+.phase-card.approved { border-left: 5px solid #1ab394; }
+.phase-card.sent { border-left: 5px solid #337ab7; }
+.phase-card.signed { border-left: 5px solid #f0ad4e; }
+.phase-card.locked { border-left: 5px solid #ed5565; }
+
+/* ==== SIDEBAR CLICK FIX ==== */
+.sidebar a,
+.sidebar li {
+    pointer-events: auto !important;
+    cursor: pointer;
+}
+
+.sidebar a {
+    color: #ffffff !important;
+    text-decoration: none;
+}
+
+.sidebar a:visited {
+    color: #ffffff !important;
+}

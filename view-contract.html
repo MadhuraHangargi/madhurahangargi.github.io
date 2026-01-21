@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>View Contract</title>
+    <link rel="stylesheet" href="css/style.css">
+
+    <!-- REQUIRED FOR PDF -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+</head>
+<body>
+
+<div class="dashboard-container">
+
+    <!-- SIDEBAR (UNCHANGED) -->
+    <aside class="sidebar">
+        <h2 class="sidebar-logo">Contracts</h2>
+        <ul class="sidebar-menu">
+            <li><a href="dashboard.html">Dashboard</a></li>
+            <li><a href="create-contract.html">Contracts</a></li>
+            <li><a href="blueprints.html">Templates</a></li>
+            <li><a href="index.html">Logout</a></li>
+        </ul>
+    </aside>
+
+    <!-- MAIN -->
+    <div class="main-area">
+        <div class="vc-layout">
+
+            <!-- PREVIEW -->
+            <div class="vc-preview" id="agreementBox">
+                Loading contract...
+            </div>
+
+            <!-- TIMELINE -->
+            <div class="vc-timeline">
+                <h3>Contract Timeline</h3>
+
+                <ul class="timeline-list" id="timelineList"></ul>
+
+                <div class="timeline-actions">
+                    <button class="btn-add" onclick="updateStatus('Approved')">Approve</button>
+                    <button class="btn-view" onclick="updateStatus('Sent')">Send</button>
+                    <button class="btn-edit" onclick="updateStatus('Signed')">Sign</button>
+                    <button class="btn-delete" onclick="updateStatus('Locked')">Lock</button>
+
+                    <!-- DOWNLOAD -->
+                    <button class="btn-view" onclick="downloadPDF()">Download PDF</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<div id="chatbot-container"></div>
+
+<link rel="stylesheet" href="assets/chatbot/chatbot.css">
+<script src="assets/chatbot/chatbot.js"></script>
+
+<script>
+fetch('assets/chatbot/chatbot.html')
+  .then(res => res.text())
+  .then(html => {
+    document.getElementById('chatbot-container').innerHTML = html;
+  });
+</script>
+<script>
+/* ================= LOAD CONTRACT ================= */
+
+const params = new URLSearchParams(window.location.search);
+const contractId = Number(params.get("id"));
+
+let contracts = JSON.parse(localStorage.getItem("contracts")) || [];
+let contract = contracts.find(c => c.id === contractId);
+
+if (!contract) {
+    document.getElementById("agreementBox").innerHTML = "Contract not found";
+}
+
+/* ================= RENDER ================= */
+
+const steps = ["Created", "Approved", "Sent", "Signed", "Locked"];
+
+function renderContract() {
+    document.getElementById("agreementBox").innerHTML = `
+        ${contract.previewHTML}
+        <hr>
+        <p><strong>Client:</strong> ${contract.clientName}</p>
+        <p><strong>Start Date:</strong> ${contract.startDate}</p>
+        <p><strong>Status:</strong> ${contract.status}</p>
+    `;
+    renderTimeline();
+}
+
+function renderTimeline() {
+    const ul = document.getElementById("timelineList");
+    ul.innerHTML = "";
+
+    steps.forEach(step => {
+        const li = document.createElement("li");
+        li.textContent = step;
+
+        if (steps.indexOf(step) < steps.indexOf(contract.status)) {
+            li.className = "done";
+        } else if (step === contract.status) {
+            li.className = "active";
+        }
+
+        ul.appendChild(li);
+    });
+}
+
+/* ================= UPDATE STATUS ================= */
+
+function updateStatus(status) {
+    // update current contract
+    contract.status = status;
+
+    // replace contract in array
+    const updatedContracts = contracts.map(c =>
+        c.id === contract.id ? contract : c
+    );
+
+    // save back to localStorage
+    localStorage.setItem("contracts", JSON.stringify(updatedContracts));
+
+    // update local reference
+    contracts = updatedContracts;
+
+    // re-render UI
+    renderContract();
+}
+
+/* ================= PDF DOWNLOAD (LOCKED UNTIL SIGNED) ================= */
+
+function downloadPDF() {
+
+    // 🔒 LOCK RULE
+    if (contract.status !== "Signed" && contract.status !== "Locked") {
+        alert("Contract must be signed before downloading PDF.");
+        return;
+    }
+
+    const { jsPDF } = window.jspdf;
+    const pdf = new jsPDF("p", "pt", "a4");
+
+    const element = document.getElementById("agreementBox");
+
+    pdf.html(element, {
+        callback: function (doc) {
+            doc.save(`${contract.contractName || "contract"}.pdf`);
+        },
+        margin: [40, 40, 40, 40],
+        autoPaging: "text",
+        width: 515,
+        windowWidth: element.scrollWidth
+    });
+}
+
+/* ================= NAV ================= */
+
+
+
+if (contract) renderContract();
+</script>
+
+</body>
+</html>

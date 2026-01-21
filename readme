@@ -1,0 +1,82 @@
+📄 Contract Management System (Frontend)
+
+-A simple contract management web application built using HTML, CSS, and JavaScript.
+This project allows users to create contracts, track their lifecycle, view status updates in real time, and interact with a floating AI assistant on every page.
+
+
+#Features
+
+-Create contracts using predefined templates
+-Live contract preview while filling details
+-Contract lifecycle tracking: 
+   -Created
+   -Approved
+   -Sent
+   -Signed
+   -Locked
+
+-Dashboard with real-time phase counts
+-Data stored using LocalStorage (no backend required)
+-Floating AI Chatbot Assistant available on all pages
+-Download contract as PDF after signing
+-Clean and professional UI layout
+
+
+#Application Flow (How it Works)
+
+1.Login Page
+  -User logs in (basic demo login).
+
+2.Dashboard
+  -Shows list of all contracts.
+  -Displays contract phase summary cards (Created, Approved, Sent, Signed, Locked).
+  -Counts update automatically when contract status changes.
+
+3.Create Contract
+  -Select a template (Employment, NDA, Lease, Service, Vendor).
+  -Fill required details.
+  -Live preview updates instantly.
+  -Upload signature.
+  -Save contract.
+
+4.View Contract
+  -See full contract preview.
+  -Update contract status using timeline buttons.
+  -Download PDF only after signing.
+
+5.AI Assistant
+  -Floating chatbot available on every page.
+  -Can show help, contract summary, and system status.
+
+#AI Chatbot (Frontend Assistant)
+
+-Floating button at bottom-right of the screen
+-Opens/closes smoothly
+-Supports:
+   -Help
+   -Contract summary
+   -System status
+
+-Fully frontend-based (JavaScript)
+-Clean separation of chatbot HTML, CSS, and JS
+
+
+
+# Folder Structure
+assets/
+│
+├── css/
+│   ├── style.css        # for global
+│   └── chatbot.css      # Chatbot-specific 
+│
+├── chatbot/
+│   ├── chatbot.html     # Chatbot UI markup
+│   └── chatbot.js       # Chatbot logic
+│        
+│        
+│
+├── dashboard.html
+├── create-contract.html
+├── view-contract.html
+├── blueprints.html
+├── index.html
